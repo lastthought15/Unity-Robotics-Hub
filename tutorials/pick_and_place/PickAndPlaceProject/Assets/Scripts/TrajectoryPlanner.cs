@@ -44,10 +44,13 @@ public class TrajectoryPlanner : MonoBehaviour
 
     public Button buttonNext;
     public Button buttonPrevious;
+    public Button buttonik;
 
     public GameObject TargetClone;
     
     int move_count;
+
+    
 
     // ROS Connector
     ROSConnection m_Ros;
@@ -409,6 +412,39 @@ public class TrajectoryPlanner : MonoBehaviour
         }
 
     }
+
+//inverse kinematic -> move robot to green target in scene
+   public void IkMovement()
+    {
+        Button btn_ik = buttonik.GetComponent<Button>();
+        btn_ik.onClick.AddListener(IkTask);
+
+        void IkTask()
+        {
+            Debug.Log($"The object will now move to the green Target position");
+
+        // Pick Pose
+        var request = new MoverServiceRequest();
+        request.joints_input = CurrentJointConfig();
+
+        request.pick_pose = new PoseMsg
+        {
+            position = (m_TargetHome.transform.position + (m_PickPoseOffset/2)).To<FLU>(),
+            orientation = m_PickOrientation.To<FLU>()
+        };
+
+        // Place Pose
+        request.place_pose = new PoseMsg
+        {
+            position = (m_TargetHome.transform.position + (m_PickPoseOffset/2)).To<FLU>(),
+            orientation = m_PickOrientation.To<FLU>()
+        };
+
+        m_Ros.SendServiceMessage<MoverServiceResponse>(m_RosServiceName, request, TrajectoryResponse);
+        }
+    }
+        
+
 
     void TrajectoryResponse(MoverServiceResponse response)
     {
