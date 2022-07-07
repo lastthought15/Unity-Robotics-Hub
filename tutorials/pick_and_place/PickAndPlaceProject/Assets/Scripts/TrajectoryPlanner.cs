@@ -136,7 +136,7 @@ public class TrajectoryPlanner : MonoBehaviour
     ///     Call the MoverService using the ROSConnection and if a trajectory is successfully planned,
     ///     execute the trajectories in a coroutine.
     /// </summary>
-    /*
+    
     public void PublishJoints(){
 
         // Pick Pose
@@ -185,7 +185,7 @@ public class TrajectoryPlanner : MonoBehaviour
         m_Ros.SendServiceMessage<MoverServiceResponse>(m_RosServiceName, request, TrajectoryResponse);
         
     }
-    */
+    
 
     public void Simulation(){
 
@@ -380,16 +380,15 @@ public class TrajectoryPlanner : MonoBehaviour
 
         void TaskPrev()
         {
-            Debug.Log($"The object number {move_count + 1} will be replaced now");
-
-
+            Debug.Log($"The object number {move_count} will be replaced now");
+            
             // Pick Pose
             var request = new MoverServiceRequest();
             request.joints_input = CurrentJointConfig();
 
             request.pick_pose = new PoseMsg
             {
-                position = (allchildren[move_count - 1].transform.position + m_PickPoseOffset).To<FLU>(),
+                position = (alltargets[move_count-1].transform.position + m_PickPoseOffset).To<FLU>(),
                 orientation = m_PickOrientation.To<FLU>()
             };
 
@@ -400,16 +399,18 @@ public class TrajectoryPlanner : MonoBehaviour
                 // The hardcoded x/z angles assure that the gripper is always positioned above the target cube before grasping.
                 orientation = Quaternion.Euler(90, m_Target.transform.eulerAngles.y, 0).To<FLU>()
             };
-
-
+        
+            
             m_Ros.SendServiceMessage<MoverServiceResponse>(m_RosServiceName, request, TrajectoryResponse);
 
-            if (move_count < 0)
+            if (move_count > 0)
             {
                 move_count = -1;
             }
 
+            
         }
+
 
     }
 
@@ -421,7 +422,7 @@ public class TrajectoryPlanner : MonoBehaviour
 
         void IkTask()
         {
-            Debug.Log($"The object will now move to the green Target position");
+            Debug.Log($"The object will now move to the purple Target position");
 
         // Pick Pose
         var request = new MoverServiceRequest();
@@ -429,14 +430,14 @@ public class TrajectoryPlanner : MonoBehaviour
 
         request.pick_pose = new PoseMsg
         {
-            position = (m_TargetHome.transform.position + (m_PickPoseOffset/2)).To<FLU>(),
+            position = (m_TargetHome.transform.position + (m_PickPoseOffset*0.5f)).To<FLU>(),
             orientation = m_PickOrientation.To<FLU>()
         };
 
         // Place Pose
         request.place_pose = new PoseMsg
         {
-            position = (m_TargetHome.transform.position + (m_PickPoseOffset/2)).To<FLU>(),
+            position = (m_TargetHome.transform.position + (m_PickPoseOffset*0.5f)).To<FLU>(),
             orientation = m_PickOrientation.To<FLU>()
         };
 
@@ -475,7 +476,7 @@ public class TrajectoryPlanner : MonoBehaviour
         if (response.trajectories != null)
         {
             // For every trajectory plan returned
-            for (var poseIndex = 0; poseIndex < response.trajectories.Length; poseIndex++)
+            for (var poseIndex = 0; poseIndex < response.trajectories.Length; poseIndex++)  //for Showcase Inverse Kinematic set: poseIndex < 1
             {
                 // For every robot pose in trajectory plan
                 foreach (var t in response.trajectories[poseIndex].joint_trajectory.points)
