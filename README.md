@@ -1,27 +1,31 @@
-<p align="center"><img src="images/warehouse.gif"/></p>
+# Unity Robotics Hub - new Secenes 
 
-# Unity Robotics Hub
+This repository was forked from the [__Unity-Robotics-Hub__ ](https://github.com/Unity-Technologies/Unity-Robotics-Hub). Their repo is awesome and easy for beginners to get along. 
 
-<!-- [![Version](https://img.shields.io/github/v/tag/Unity-Technologies/Unity-Robotics-Hub)](https://github.com/Unity-Technologies/Unity-Robotics-Hub/releases) -->
-[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE.md)
-![ROS](https://img.shields.io/badge/ros-melodic-brightgreen)
-![ROS](https://img.shields.io/badge/ros-noetic-brightgreen)
-![ROS](https://img.shields.io/badge/ros2-foxy-brightgreen)
-![Unity](https://img.shields.io/badge/unity-2020.2+-brightgreen)
+This Repository has some new scenes build upon the existing repo: 
+- Place multiple objects to different target places 
+- Place multiple spawned objects to different target places 
+- Set the gripper to a specific location 
 
-This is a central repository for tools, tutorials, resources, and documentation for robotic simulation in Unity.
-
-> The contents of this repository are in active development. Its features and API are subject to significant change as development progresses.
+Following will a step by step guide how [run the scenes](#running-this-repo) of this repo, and [recreate](#start-from-scratch) them by yourself.
 
 ---
+## [Running this Repo](#running-this-repo)
+### PART 1: Getting the Repo 
 
-We're currently working on lots of things! Please take a short moment fill out our [survey](https://unitysoftware.co1.qualtrics.com/jfe/form/SV_0ojVkDVW0nNrHkW) to help us identify what products and packages to build next.
+Start by cloning the repo, if you just want to get the scenes running clone this repo: 
+```
+https://github.com/Unity-Technologies/Unity-Robotics-Hub.git
+```
+If you want to start from scratch clone the Unity-Robotics-Hub repo: 
+```
+https://github.com/Unity-Technologies/Unity-Robotics-Hub.git
+```
+Open the following folder in 
+
+
 
 ---
-
-## Introduction
-
-Simulation plays an important role in robotics development, and we’re here to ensure that roboticists can use Unity for these simulations. We're starting off with a set of tools to make it easier to use Unity with existing ROS-based workflows. Try out some of our samples below to get started quickly.
 
 ## Getting Started
 ### [Quick Installation Instructions](tutorials/quick_setup.md)
